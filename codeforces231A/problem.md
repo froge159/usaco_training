@@ -8,13 +8,21 @@ The first input line contains a single integer n (1 ≤ n ≤ 1000) — 
 Output
 Print a single integer — the number of problems the friends will implement on the contest.
 
-Example:
-
-input:
+Examples
+inputCopy
 3
 1 1 0
 1 1 1
 1 0 0
-
-output:
+outputCopy
 2
+input
+2 
+1 0 0
+0 1 1
+output
+1
+Note
+In the first sample Petya and Vasya are sure that they know how to solve the first problem and all three of them know how to solve the second problem. That means that they will write solutions for these problems. Only Petya is sure about the solution for the third problem, but that isn't enough, so the friends won't take it.
+
+In the second sample the friends will only implement the second problem, as Vasya and Tonya are sure about the solution.
