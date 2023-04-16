@@ -1,2 +1,2 @@
 # usaco_training
-My code from the beginning of my USACO training.
+All problems I have solved (or not) on usaco.guide
