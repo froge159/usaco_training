@@ -9,9 +9,6 @@ public class Main {
         int x = Integer.parseInt(st.nextToken());
         int y = Integer.parseInt(st.nextToken());
         int z = Integer.parseInt(st.nextToken());
-
-        ArrayList<Integer> x_pours = new ArrayList<Integer>(Arrays.asList(0));
-        ArrayList<Integer> y_pours = new ArrayList<Integer>(Arrays.asList(0));
         ArrayList<Integer> pours = new ArrayList<Integer>();
 
         if (x == 0 && y == 0) {
