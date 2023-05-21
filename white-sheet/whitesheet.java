@@ -40,7 +40,9 @@ public class Main {
 
         long openArea = whiteArea - whiteb1Area - whiteb2Area + b1b2Area;
 		if (whiteArea == whiteb1Area || whiteArea == whiteb2Area) { openArea = 0;}
-        if (openArea > 0) { System.out.println("YES"); }
-        else { System.out.println("NO"); } 
+        PrintWriter pw = new PrintWriter(System.out);
+        if (openArea > 0) { pw.println("YES"); }
+        else { pw.println("NO"); } 
+        pw.close();
     }
 }
