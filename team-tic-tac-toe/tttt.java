@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.*;
-import java.util.HashSet;
 import java.net.Inet4Address;
 
 public class Test{
@@ -271,7 +270,6 @@ public class Test{
 
         pw.println(singleCows.size());
         pw.println(teamCows.size());
-        pw.flush();
         pw.close();
         
     
