@@ -1,12 +1,6 @@
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
-// create array of values (speeding ticket)
-//      do cows ranges and use cooling needs
-//      then apply cooling of ac range and subtract cools from cows
-//      if <=0 for all values
-// store total in leasCost, replace if needed
-
 
 public class Testing {
     static ArrayList<Integer> costs = new ArrayList<Integer>();
