@@ -9,9 +9,7 @@ public class Main {
         int n = Integer.parseInt(st.nextToken());
         int consistentPairs = 0;
         List<ArrayList<Integer>> listOfLists = new ArrayList<>();
-        // arrays of lines
-        // get number pair
-        // check if i index less than j index on all lines
+    
         for (int i = 0; i < k; i++) {
             st = new StringTokenizer(br.readLine());
             ArrayList<Integer> newList = new ArrayList<>();
@@ -23,7 +21,7 @@ public class Main {
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= n; j++) {
                 ArrayList<Boolean> consistent = new ArrayList<Boolean>();
-                for (int a = 0; a <= listOfLists.size() - 1; a++) { // index of the line in listOfLists
+                for (int a = 0; a <= listOfLists.size() - 1; a++) { 
                     int i_index = listOfLists.get(a).indexOf(i);
                     int j_index = listOfLists.get(a).indexOf(j);
                     if (i_index < j_index) {
