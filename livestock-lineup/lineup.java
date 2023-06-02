@@ -22,7 +22,6 @@ public class Main {
                 else if (j == 5) {restrictions[i][1] = x;}
             }
         }
-        //System.out.println(Arrays.deepToString(restrictions));
         for (int i = 0; i < 8; i++) { indexCount[i]++; }
         perms(restrictions);
         Collections.sort(permutations);
