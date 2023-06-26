@@ -13,6 +13,7 @@ public class bubblesort {
                a[j] = a[j + 1]; a[j + 1] = temp;
             }
          }
-     }
+      }
+      // Collections.swap() can be used for Arraylist
    }
 }
