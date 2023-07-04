@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 import java.util.stream.Collectors;
 
-public class Testing {
+public class bozosort {
    public static void main(String[] args) throws IOException {
       ArrayList<Integer> arr = new ArrayList<Integer>();
       BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
