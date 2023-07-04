@@ -21,7 +21,7 @@ public class bozosort {
          System.out.println(arr.toString());
          count++;
       }
-
+      pw.println();
       pw.println("Sorted " + arr.toString());
       pw.println(count + " swaps");
       pw.close();
