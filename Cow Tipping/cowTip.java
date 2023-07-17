@@ -1,6 +1,6 @@
 import java.io.*;
 import java.util.*;
-public class Main {
+public class cowTip {
 	static int n;
 	static int count = 0;
 	static char[][] arr;
