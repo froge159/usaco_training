@@ -10,10 +10,10 @@ public class lineup {
 	public static void main(String[] args) throws IOException {
 		Map<String, Integer> cowInds = new HashMap<>();
 		for (int i = 0; i < COWS.length; i++) { cowInds.put(COWS[i], i); }
-    	BufferedReader read = new BufferedReader(new FileReader("lineup.in"));
-    	PrintWriter out = new PrintWriter("lineup.out");
+    		BufferedReader read = new BufferedReader(new FileReader("lineup.in"));
+    		PrintWriter out = new PrintWriter("lineup.out");
 		BufferedReader read = new BufferedReader(new InputStreamReader(System.in));
-    	PrintWriter out = new PrintWriter(System.out);
+    		PrintWriter out = new PrintWriter(System.out);
 		int reqNum = Integer.parseInt(read.readLine());
 
 		ArrayList<ArrayList<Integer>> neighbors = new ArrayList<>(COWS.length);
@@ -28,7 +28,7 @@ public class lineup {
 			neighbors.get(cow1).add(cow2);
 			neighbors.get(cow2).add(cow1);
 		}
-    //System.out.println(neighbors.toString());
+    		//System.out.println(neighbors.toString());
 		List<Integer> order = new ArrayList<>();
 		boolean[] added = new boolean[COWS.length];
 		for (int c = 0; c < COWS.length; c++) {
