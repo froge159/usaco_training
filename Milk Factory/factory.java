@@ -6,16 +6,16 @@ public class factory {
 	static boolean found = false;
 	static void search (int v, boolean visited[], int target) { // 5 1
 		visited[v-1] = true;
-        Iterator<Integer> i = x.get(v-1).listIterator();
-        while (i.hasNext()) {
-            int n = i.next(); //System.out.println(n);
+       		Iterator<Integer> i = x.get(v-1).listIterator();
+        	while (i.hasNext()) {
+            		int n = i.next(); //System.out.println(n);
 			if (n == target) {
 				found = true;
 			}
-            if (!visited[n-1]) {
-                search(n, visited, target);
+            		if (!visited[n-1]) {
+                		search(n, visited, target);
 			}
-        }
+        	}
 	}
 	
 	public static void main(String[] args) throws IOException {
