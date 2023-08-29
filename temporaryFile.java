@@ -1,40 +1,34 @@
+/*
+   Samuel Xie
+   Period 7
+*/
 import java.util.*;
 import java.io.*;
-
-public class temporaryFile {
-   static int sum = Integer.MIN_VALUE;
-   static void powerSet(int[] arr, int index, ArrayList<Integer> curr) {
-      int n = arr.length;
-      if (index == n) {return;}
-      
-      if (curr.size() > 0) {
-         System.out.println(sum);
-         int temp = 0;
-         for (int i: curr) {temp += curr.get(i);}
-         if (temp > sum) {sum = temp;}
-      }
-      
-      for (int i = index + 1; i < n; i++) {
-         curr.add(arr[i]);
-         powerSet(arr, i, curr);
-         curr.remove(curr.size() - 1);
-      }
-   }
-   public static int sequence(int[] arr) {
-      if (arr.length == 0) {return 0;}
-      else {
-         for (int i: arr) {
-            if (i < 0) {return 0;}
+public class temporaryFile {  
+   public static void main(String[] args) throws IOException {
+      // how many fences have height of at least n [3, 1, 1] [at least 1, at least 2, at least 3]
+      // create array starting from 0 of different heights
+      // iterate through array, increase the count of that index.
+      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+      PrintWriter pw = new PrintWriter(System.out);
+      StringTokenizer st = new StringTokenizer(br.readLine());
+      int T = Integer.parseInt(st.nextToken());      
+      for (int i = 0; i < T; i++) {
+         st = new StringTokenizer(br.readLine());
+         int N = Integer.parseInt(st.nextToken());
+         int[] old = new int[N];
+         int[] newArr = new int[N];
+         for (int j = 0; j < N; j++) {
+            int num = Integer.parseInt(st.nextToken());
+            old[j] = num;
+            for (int k = 0; k < N; i++) {
+               if (k + 1 <= num) {
+                  newArr[k]++;
+               }
+            }
          }
-         ArrayList<Integer> curr = new ArrayList<>();
-         powerSet(arr, -1, curr);
+         if (old.equals(newArr)) pw.println("YES");
+         else pw.println("NO");
       }
-      return sum; 
-      
-   }
-
-   public static void main(String[] args) {
-      int[] testArr = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
-      System.out.println(sequence(testArr));
    }
 }
