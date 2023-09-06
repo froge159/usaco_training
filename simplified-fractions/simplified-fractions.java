@@ -28,23 +28,24 @@ public class Main {
         ArrayList<Integer> y = new ArrayList<Integer>();
         Set<Integer> set1 = new HashSet<>();
         Set<Integer> set2 = new HashSet<>();
-        if (index == q.size()) { return; }
+        if (index == q.size()) return;
 
 
         for (int i = 2; i <= q.get(index); i++) {
-            if (q.get(index) % i == 0) {x.add(i);}
+            if (q.get(index) % i == 0) x.add(i);
         }
         for (int i = 2; i <= p.get(index); i++) {
-            if (p.get(index) % i == 0) {y.add(i);}
+            if (p.get(index) % i == 0) y.add(i);
         }
     
-        for (int i = 0; i < x.size(); i++ ) { set1.add(x.get(i));}
-        for (int i = 0; i < y.size(); i++) { set2.add(y.get(i));}
+        for (int i = 0; i < x.size(); i++ ) set1.add(x.get(i));
+        for (int i = 0; i < y.size(); i++) set2.add(y.get(i));
         
         set1.retainAll(set2);
-        if (set1.size() > 0) {factors++;}
+        if (set1.size() > 0) factors++;
         
-        set1.clear(); set2.clear(); x.clear(); y.clear();
+        set1.clear(); set2.clear(); 
+        x.clear(); y.clear();
         factor(index + 1);
 
     }
