@@ -1,18 +1,7 @@
-// Source: https://usaco.guide/general/io
-
 import java.io.*;
 import java.util.*;
-// outer loop will be rotation
-	// rotate by creating clone of current array
-	// loop through row by row, move to right, if can't, move down one row, if can't move up one row.
-// 2nd nested loop will be y values. max top left y value is (N - K) note that K can change per rotation
-// 2nd nested loop will be x values. max top left x value is (N - K) note that K can change per rotation
 
-// checking: loop through row by row and check with current stamp. If ink orientation is the same, stamp.
-	// stamping: if stamp cell = ink, stamp. 
-// white orientation doens't matter.
-// check if equals expected 
-public class Main {
+public class Solve {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
@@ -48,18 +37,24 @@ public class Main {
 			}
 			
 			for (int rot = 0; rot < 4; rot++) {
-				if (rot == 0) continue;
-				char[][] clone = stamp.clone(); // 1,0   0,0   1,1         0,1
-				for (int i = 0; i < K; i++) {
-					for (int idk = 0; idk < k; i++) {
-						for (int z = 0; z < K; z++) {
-							for (int j = K; j > -1; j--) {
-								stamp[i][idk] = clone[z][k];
+				if (rot != 0) {
+					char[][] clone = stamp.clone();
+					for (int i = 0; i < K; i++) {
+						for (int idk = 0; idk < K; i++) {
+							for (int z = 0; z < K; z++) {
+								for (int j = K; j > -1; j--) {
+									stamp[i][idk] = clone[z][k];
+								}
 							}
 						}
 					}
 				}
-				for (int subArr = 0; subArr)
+				for (int rows = 0; rows <= N - K; rows++) { // row index
+					
+					for (int cols = 0; cols <= N - K; cols++) { // index inside subarray
+					}
+				}
+				
 			}
 		}
 	}
