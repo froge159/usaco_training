@@ -49,12 +49,17 @@ public class Main {
 			
 			for (int rot = 0; rot < 4; rot++) {
 				if (rot == 0) continue;
-				char[][] clone = stamp.clone();
-				for (int j = 0; j < clone.length; j++) {
-					for (int z = 0; z < clone[j].length; z++) {
-						
+				char[][] clone = stamp.clone(); // 1,0   0,0   1,1         0,1
+				for (int i = 0; i < K; i++) {
+					for (int idk = 0; idk < k; i++) {
+						for (int z = 0; z < K; z++) {
+							for (int j = K; j > -1; j--) {
+								stamp[i][idk] = clone[z][k];
+							}
+						}
 					}
 				}
+				for (int subArr = 0; subArr)
 			}
 		}
 	}
