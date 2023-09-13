@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class StampGrid {
+public class temporaryFile {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int T = scanner.nextInt(); // Number of test cases
