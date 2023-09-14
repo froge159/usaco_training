@@ -2,17 +2,28 @@ import java.util.*;
 import java.io.*;
 
 public class CircleUnion {
-   static ArrayList<Integer> pointsx = new ArrayList<>();
-   static ArrayList<Integer> pointsy = new ArrayList<>();
-   static boolean check(int[] pts) {
-      for (int i = 0; i < pointsx.size(); i++) {
-         if (pointsx.get(i) == pts[0] && pointsy.get(i) == pts[1])  {
-            //System.out.println("found");
-            return true;
+   static ArrayList<Integer> ypoints = new ArrayList<>();
+   static ArrayList<Integer> xpoints = new ArrayList<>();
+
+   static void check(int a, int b, int x, int y, int r) {
+      boolean found = false;
+      if (Math.sqrt(Math.pow(a - x, 2) + Math.pow(b - y, 2)) > r) {
+         //System.out.println(a + " " + b + " " + x);
+         found = true;
+      }
+      for (int i = 0; i < xpoints.size(); i++) {
+         if (xpoints.get(i) == a && ypoints.get(i) == b) {
+            found = true;  break;
          }
       }
-      return false;
+      if (!found) {
+         xpoints.add(a);
+         ypoints.add(b);
+      }
+      //System.out.println(xpoints.toString());
+      //System.out.println(ypoints.toString());
    }
+
    public static void main(String[] args) throws IOException {
       BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
       StringTokenizer st = new StringTokenizer(br.readLine());
@@ -22,24 +33,20 @@ public class CircleUnion {
          int x = Integer.parseInt(st.nextToken());// 0,1    1,0   0, -1   -1, 0
          int y = Integer.parseInt(st.nextToken());
          int r = Integer.parseInt(st.nextToken());
-         if (Math.sqrt((double) r) % 1 != 0) {
-            continue;
-         }
-         for (int j = -r; j <= r; j+=2) {
-            int[] pts1 = {x, y + j};
-            int[] pts2 = {x + j, y};
-            if (!check(pts1)) {
-               pointsx.add(pts1[0]);
-               pointsy.add(pts1[1]);
+         check(x, y, x, y, r);
+         for (int xpt = x; xpt <= x + r; xpt++) {
+            for (int ypt = y; ypt <= y + r; ypt++) {
+               check(x + xpt, y + ypt, x, y, r);
+               check(x + xpt, y - ypt, x, y, r);
+               check(x - xpt, y + ypt, x, y, r);
+               check(x - xpt, y - ypt, x, y, r);
             }
-            if (!check(pts2)) {
-               pointsx.add(pts2[0]);
-               pointsy.add(pts2[1]);
-            }
-            
          }
+         //System.out.println(xpoints.toString());
+         //System.out.println(ypoints.toString());
 
       }
-      System.out.println(pointsx.size());
+      System.out.println(xpoints.toString());
+      System.out.println(ypoints.toString());
    }
 }
