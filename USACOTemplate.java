@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class ProblemOne {
+public class USACOTemplate {
    public static void main(String[] args) throws IOException {
       // BufferedReader br = new BufferedReader(new FileReader("input.in"));
       // PrintWriter pw = new PrintWriter("output.out");
