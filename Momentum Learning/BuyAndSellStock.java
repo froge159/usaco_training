@@ -34,7 +34,7 @@ public class BuyAndSellStock {
                owned = false;
             }
 
-            else if (total - nums[i] + nums[i + 1]> total - nums[i]) {
+            else if (nums[i + 1]> nums[i]) {
                total -= nums[i];
                owned = true;
             }
