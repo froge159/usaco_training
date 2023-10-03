@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class BuyAndSellStock {
+public class Main {
    public static void main(String[] args) throws IOException {
          // BufferedReader br = new BufferedReader(new FileReader("input.in"));
          // PrintWriter pw = new PrintWriter("output.out");
@@ -27,7 +27,7 @@ public class BuyAndSellStock {
                }
             }
             else if (i == N - 1) {
-               if (owned) total -= nums[i];
+               if (owned) total += nums[i];
                break;
             }
 
