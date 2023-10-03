@@ -16,7 +16,7 @@ public class BuyAndSellStock {
          for (int i = 0; i < N; i++) {
             nums[i] = Integer.parseInt(st.nextToken());
          }
-
+         // if next element 
          for (int i = 0; i < N; i++) {
             if (i == 0) {
                if (total - nums[i] + nums[i + 1] > 0){
@@ -34,7 +34,7 @@ public class BuyAndSellStock {
                owned = false;
             }
 
-            else if (nums[i + 1] > total - nums[i]) {
+            else if (total - nums[i] + nums[i + 1]> total - nums[i]) {
                total -= nums[i];
                owned = true;
             }
