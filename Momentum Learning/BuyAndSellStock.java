@@ -21,9 +21,14 @@ public class Main {
          // if next element 
          for (int i = 0; i < N; i++) {
             if (i == 0) {
-               if (total - nums[i] + nums[i + 1] > 0){
+               try {
+                  if (total - nums[i] + nums[i + 1] > 0){
                   total -= nums[i]; 
                   owned = true;
+                  }
+               }
+               catch (Exception e) {
+                  break;
                }
             }
             else if (i == N - 1) {
