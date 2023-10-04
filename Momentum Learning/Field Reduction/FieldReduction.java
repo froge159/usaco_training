@@ -46,7 +46,8 @@ public class Main {
             pts.get(i).add(a); x.add(a); xc.add(a);
             pts.get(i).add(b); y.add(b); yc.add(b);
          }
-         int start = N - 1; int end = 0;
+         int startx = N - 1; int endx = 0;
+		 int starty = N - 1; int endy = 0;
          Collections.sort(xc); Collections.sort(yc);
          for (int i = 0; i < 3; i++) {
             int maxArea = Integer.MIN_VALUE;
@@ -55,13 +56,18 @@ public class Main {
                // left has min x, right has max x
                // bottom has min y, top has max y
                if (linePts.size() > 0) { 
-                  if (face == 1) {
-                     
-                  }
-               }
+                    if (face == 1) {
+						end = 1;
+						start = Collections.binarySearch(pts.get(j).get(1), yc);
+
+                    }
+					if (face == 2) {
+						
+					}
+                }
             }
 
-         }
+        }
          
 
     }    
