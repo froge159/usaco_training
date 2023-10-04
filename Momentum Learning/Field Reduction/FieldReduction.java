@@ -3,23 +3,28 @@ import java.io.*;
 
 public class Main {
    static ArrayList<ArrayList<Integer>> linePts = new ArrayList<>();
-	static int area(ArrayList<Integer> x, ArrayList<Integer> y) { // takes sorted list
-		return (x.get(x.size() - 1) - x.get(0)) * (y.get(y.size() - 1) - y.get(0));
+	static int area(ArrayList<Integer> x, ArrayList<Integer> y, int start, int end) { // takes sorted list
+		return (x.get(start) - x.get(end)) * (y.get(start) - y.get(end));
 	}
-	static void onBorder(ArrayList<Integer> xc, ArrayList<Integer> yc, ArrayList<Integer> pt) {
+	static int onBorder(ArrayList<Integer> xc, ArrayList<Integer> yc, ArrayList<Integer> pt) {
 		ArrayList<ArrayList<Integer>> onPoints = new ArrayList<>();
 		if (pt.get(0) == xc.get(0) && yc.get(0) <= pt.get(1) && yc.get(1) >= pt.get(1)) {
 			linePts.add(pt)
+         return 1; // left 
 		}
       if (pt.get(0) == xc.get(1) && yc.get(0) <= pt.get(1) && pt.get(1) <= yc.get(1)) {
 			linePts.add(pt)
+         return 2; // right
 		}
       if (pt.get(1) == yc.get(0) && xc.get(0) <= pt.get(0) && pt.get(0) <= xc.get(1)) {
 			linePts.add(pt)
+         return 3; // bottom
 		}
       if (pt.get(1) == yc.get(1) && xc.get(0) <= pt.get(0) && pt.get(0) <= xc.get(1)) {
 			linePts.add(pt)
+         return 4; // top
 		}
+      return 0;
 	}
 	public static void main(String[] args) throws IOException {
         // BufferedReader br = new BufferedReader(new FileReader("input.in"));
@@ -41,13 +46,18 @@ public class Main {
             pts.get(i).add(a); x.add(a); xc.add(a);
             pts.get(i).add(b); y.add(b); yc.add(b);
          }
+         int start = N - 1; int end = 0;
          Collections.sort(xc); Collections.sort(yc);
          for (int i = 0; i < 3; i++) {
             int maxArea = Integer.MIN_VALUE;
             for (int j = 0; j < pts.size(); j++) {
-               ArrayList<Integer> idk = onBorder(pts.get(j));
-               if (idk.size() > 0) {
-                  
+               int face = onBorder(pts.get(j));
+               // left has min x, right has max x
+               // bottom has min y, top has max y
+               if (linePts.size() > 0) { 
+                  if (face == 1) {
+                     
+                  }
                }
             }
 
