@@ -77,14 +77,22 @@ public class FieldReduction {
 			int re = temp.get(temp.size() - 1);
 			temp.clear(); removed.add(re);
         }
-		smallx = Integer.MAX_VALUE; smally = Integer.MAX_VALUE;
-		largex = Integer.MIN_VALUE; largey = Integer.MIN_VALUE;
+		int smallx = Integer.MAX_VALUE; int smally = Integer.MAX_VALUE;
+		int largex = Integer.MIN_VALUE; int largey = Integer.MIN_VALUE;
 		for (int i = 0; i < pts.size(); i++) {
 			if (i == removed.get(0) || i == removed.get(1) || i == removed.get(2)) {
 				pts.get(i).clear();
 			}
+			else {
+				if (pts.get(i).get(0) < smallx) smallx = pts.get(i).get(0);
+				if (pts.get(i).get(0) > largex) largex = pts.get(i).get(0);
+				if (pts.get(i).get(1) < smally) smally = pts.get(i).get(1);
+				if (pts.get(i).get(1) > largey) largey = pts.get(i).get(1);
+			}
 
 		}
+		pw.println(removed.toString());
+		pw.println((largex - smallx) * (largey - smally));
 		pw.close();
          
 
