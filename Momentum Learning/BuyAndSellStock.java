@@ -1,38 +1,31 @@
 import java.util.*;
 import java.io.*;
 
-public class Main {
+public class BuyAndSellStock {
    public static void main(String[] args) throws IOException {
          // BufferedReader br = new BufferedReader(new FileReader("input.in"));
-         // PrintWriter pw = new PrintWriter("output.out");
-         // 4 
-         // 1 2 3 4
+         // PrlongWriter pw = new PrlongWriter("output.out");
          BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
          PrintWriter pw = new PrintWriter(System.out);
          StringTokenizer st = new StringTokenizer(br.readLine());
          int N = Integer.parseInt(st.nextToken());
          st = new StringTokenizer(br.readLine());
-         int[] nums = new int[N];
+         long[] nums = new long[N];
          boolean owned = false;
-         int total = 0;
+         long total = 0;
          for (int i = 0; i < N; i++) {
-            nums[i] = Integer.parseInt(st.nextToken());
+            nums[i] = Long.parseLong(st.nextToken());
          }
          // if next element 
          for (int i = 0; i < N; i++) {
             if (i == 0) {
-               try {
-                  if (total - nums[i] + nums[i + 1] > 0){
+               if (total - nums[i] + nums[i + 1] > 0){
                   total -= nums[i]; 
                   owned = true;
-                  }
-               }
-               catch (Exception e) {
-                  break;
                }
             }
             else if (i == N - 1) {
-               if (owned) total += nums[i];
+               if (owned) total -= nums[i];
                break;
             }
 
