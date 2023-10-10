@@ -1,0 +1,12 @@
+Create array keeping track  john's daily logs
+2 arrays keeping track of cows:outputs
+max variable, count variable, list of current cows, old cows
+
+Loop through day and changes one by one
+	Loop through cows, find biggest value, set to max
+	
+	Loop through all other values:
+		If the same as current, add to current cows
+	If this list is different than old, count++
+	Old = current
+Current.fill(0)
