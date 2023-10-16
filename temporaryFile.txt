@@ -1,64 +1,59 @@
-Obervations:
-first set unmovable cows into respective positions
-we can try putting 1 at every position and check if it satisfies the hierarchy
-
-Solution:
-create empty array of size N
-fill array with unmovable cows
-if 1 is an unmovable cow, return 1 index
-
-for every position available to 1:
-  loop through array again put cows in hierarchy in earliest possible positions. if it is already in array, let it be.
-  loop through array again and check if it satisfies the hierarchy: return index of 1
-   
 import java.util.*;
 import java.io.*;
 
-class Main {
-    static boolean contains(int[] arr, int element) {
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] == element) return true;
+class Make24 {
+    static int count = 0;
+    static void solve(int[] nums, int res, int idx) {
+        if (idx == nums.length - 1) {
+            loop(nums,res);
         }
-        return false;
+        for (int i = idx; i < nums.length; i++) {
+            swap(nums, idx, i);
+            solve(nums, res, idx + 1);
+            swap(nums, idx, i);
+        }
     }
-    static int indexOf(int[] arr, int element) {
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] == element) return i;
+    static void swap(int[] nums, int a, int b) {
+        int temp = nums[a];
+        nums[a] = nums[b];
+        nums[b] = temp;
+    } 
+    static void loop(int[] nums, int res) {
+        // + - * /
+        for (int i = 0; i < 4; i++) {
+            double result = nums[0];
+            result = operate(nums, i, result, 1);
+            for (int j = 0; j < 4; j++) {
+                result = operate(nums, j, result, 2);
+                for (int k = 0; k < 4; k++) {
+                    result = operate(nums, k, result, 3);
+                }
+            }
+            if (result == res) {count++; break;}
         }
-        return -1;
+    }
+    static double operate(int[] nums, int index, double result, int currIndex) {
+        if (index == 0) return result + nums[currIndex];
+        if (index == 1) return result - nums[currIndex];
+        if (index == 2) return result * nums[currIndex];
+        else return result / nums[currIndex];
     }
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter pw = new PrintWriter(System.out);
         StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken());
-        int K = Integer.parseInt(st.nextToken());
-        int J = Integer.parseInt(st.nextToken());
-        int[] cows = new int[N + 1];
-        int[] hier = new int[K];
-        st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < K; i++) {
-            hier[i] = Integer.parseInt(st.nextToken());
-        }
-        for (int i = 0; i < J; i++) {
+        for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
-            cows[b] = a;
+            int c = Integer.parseInt(st.nextToken());
+            int d = Integer.parseInt(st.nextToken());
+            int res = Integer.parseInt(st.nextToken());
+            int[] nums = {a, b, c, d};
+            solve(nums, res, 0);
         }
-        if (contains(cows, 1)) pw.println(indexOf(cows, 1));
-        for (int i = 1; i <= N; i++) {
-            if (cows[i] == 0) {
-                cows[i] = 1;
-                int index = 0;
-                for (int i = 1; i <= 6; i++) {
-                    if (cows[i] == 0 && !contains(cows, hier[index])) {
-                        cows[i] = hier[index];
-                        index++;
-                    }
-                }
-            }
-        }
+        pw.println(count);
         pw.close();
     }
 }
