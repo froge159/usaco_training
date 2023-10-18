@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class DiamondPasture {
+public class Main {
     // create boolean array that holds cells that are in the diamond or not. clear it after every new diamond set
     // for each diamond set, loop through grid values and add to count if its corresponding place is marked true
     public static void main(String[] args) throws IOException {
@@ -22,12 +22,17 @@ public class DiamondPasture {
                 grid[i][j] = Integer.parseInt(st.nextToken());
             }
         }
-        for (int i = 0; i < Q; i++) {
+        for (int i = 0; i < Q; i++) { // 1 * 2 * 2 * 2
             st = new StringTokenizer(br.readLine());
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
-            int c = Integer.parseInt(st.nextToken());
-            
+            int a = Integer.parseInt(st.nextToken()); // xpos
+            int b = Integer.parseInt(st.nextToken());// ypos
+            int c = Integer.parseInt(st.nextToken()); // diagonal len
+            int yVal = 1;
+            for (int x = a - c; x <= a + c; x++) {
+                if (yVal == 1) {
+                    dmdsGrid[x][b] = true;
+                }
+            }
         }
         
         pw.close();
