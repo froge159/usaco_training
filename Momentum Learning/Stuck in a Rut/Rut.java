@@ -15,20 +15,20 @@ public class Main {
         ArrayList<ArrayList<Integer>> e = new ArrayList<>();
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
-            String line = st.nextToken();
-            if (line.charAt(0) == 'E') {
+            if (st.nextToken().equals("E")) {
                 e.add(new ArrayList<Integer>());
-                e.get(i).add(Integer.parseInt(line.substring(2, 3)));
-                e.get(i).add(Integer.parseInt(line.substring(4)));
-                e.get(i).add(i);
+                e.get(e.size() - 1).add(Integer.parseInt(st.nextToken()));
+                e.get(e.size() - 1).add(Integer.parseInt(st.nextToken()));
+                e.get(e.size() - 1).add(i);
             }
             else {
                 n.add(new ArrayList<Integer>());
-                n.get(i).add(Integer.parseInt(line.substring(2, 3)));
-                n.get(i).add(Integer.parseInt(line.substring(4)));
-                n.get(i).add(i);
+                n.get(n.size() - 1).add(Integer.parseInt(st.nextToken()));
+                n.get(n.size() - 1).add(Integer.parseInt(st.nextToken()));
+                n.get(n.size() - 1).add(i);
             }
         }
+		n.sort(Comparator.comparingInt(n -> n.get(n).get(0)));
         pw.close();
     }
 }
