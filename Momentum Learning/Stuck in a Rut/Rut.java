@@ -1,38 +1,34 @@
 import java.util.*;
 import java.io.*;
 
-public class Rut {
+public class Main {
     public static void main(String[] args) throws IOException {
-        // BufferedReader br = new BufferedReader(new FileReader("input.in"));
-        // PrintWriter pw = new PrintWriter("output.out");
+        // BufferedReader br = new BufferedReader(new FileReader("rut.in"));
+        // PrintWriter pw = new PrintWriter("rut.out");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter pw = new PrintWriter(System.out);
         StringTokenizer st = new StringTokenizer(br.readLine());
-
+        int N = Integer.parseInt(st.nextToken());
+        int[] dists = new int[N];
+        boolean[] blocked = new boolean[N];
+        ArrayList<ArrayList<Integer>> n = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> e = new ArrayList<>();
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
+            String line = st.nextToken();
+            if (line.charAt(0) == 'E') {
+                e.add(new ArrayList<Integer>());
+                e.get(i).add(Integer.parseInt(line.substring(2, 3)));
+                e.get(i).add(Integer.parseInt(line.substring(4)));
+                e.get(i).add(i);
+            }
+            else {
+                n.add(new ArrayList<Integer>());
+                n.get(i).add(Integer.parseInt(line.substring(2, 3)));
+                n.get(i).add(Integer.parseInt(line.substring(4)));
+                n.get(i).add(i);
+            }
+        }
         pw.close();
     }
 }
-/*
-Boolean 10001 array holding grass true/false
-Integer 10001 arraylist holding all cows index in specs
-2d arraylist holding all cows specs
-2d array holding ha scow stopped moving
-Array holding each count
-
-
-For I in range 10000
-	If stopped = true, continue;
-	
-	Make changes (make sure to update main grid and specs)
-	If it moved onto an empty cell, stopped = true
-	If there already is a cow on the position a cow is trying to move:
-		Add to that subarray
-	Count++
-	
-	For every cow:
-		Make their corresponding cells empty
-		
-
-Looping through specs:
-	If stopped = true, print out ending count
-Else, print infinity*/
