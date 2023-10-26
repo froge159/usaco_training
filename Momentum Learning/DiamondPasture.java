@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class Main {
+public class Diamond {
     // create boolean array that holds cells that are in the diamond or not. clear it after every new diamond set
     // for each diamond set, loop through grid values and add to count if its corresponding place is marked true
     public static void main(String[] args) throws IOException {
@@ -15,7 +15,6 @@ public class Main {
         int Q = Integer.parseInt(st.nextToken());
         int sum = 0;
         int[][] grid = new int[N + 1][M + 1]; // note that grid starts at index [1][1]
-        boolean[][] dmdsGrid = new boolean[N + 1][M + 1];
         for (int i = 1; i <= N; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 1; j <= M; j++) {
@@ -27,14 +26,27 @@ public class Main {
             int a = Integer.parseInt(st.nextToken()); // xpos
             int b = Integer.parseInt(st.nextToken());// ypos
             int c = Integer.parseInt(st.nextToken()); // diagonal len
-            int yVal = 1;
-            for (int x = a - c; x <= a + c; x++) {
-                if (yVal == 1) {
-                    dmdsGrid[x][b] = true;
+            int pos = 0;
+            for (int x = a - c / 2; x <= a + c / 2; x++) {
+                for (int y = b + pos; y >= b - pos; y--) {
+                    if (x >= 1 && x <= M && y >= 1 && y <= N) {
+                        sum += grid[y][x];
+                    }
+//}
                 }
+                if (x >= a) pos--;
+                else pos++;
             }
         }
-        
+        pw.println(sum);
         pw.close();
+        /*
+           [0, 0, 0, 0, 0, 0]
+         * [0, 1, 1, 1, 1, 1]
+         * [0, 1, 1, 1, 1, 1]
+         * [0, 1, 1, 1, 1, 1]
+         * [0, 1, 1, 1, 1, 1]
+         * [0, 1, 1, 1, 1, 1]
+         */
     }
 }
