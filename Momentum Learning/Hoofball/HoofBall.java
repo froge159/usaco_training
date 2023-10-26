@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class HoofBall {
+public class Main {
     static boolean[] held;
     static int[] cows;
     static PrintWriter pw;
@@ -24,7 +24,7 @@ public class HoofBall {
                 else {
                     currIndex--;
                 }
-                if (visited[currIndex] = true) break;
+                if (visited[currIndex]) break;
                 visited[currIndex] = true;
                 held[currIndex] = true;
             }
