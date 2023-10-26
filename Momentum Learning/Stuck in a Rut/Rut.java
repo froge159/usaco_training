@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class Main {
+public class Rut {
     public static void main(String[] args) throws IOException {
         // BufferedReader br = new BufferedReader(new FileReader("rut.in"));
         // PrintWriter pw = new PrintWriter("rut.out");
@@ -28,7 +28,26 @@ public class Main {
                 n.get(n.size() - 1).add(i);
             }
         }
-		n.sort(Comparator.comparingInt(n -> n.get(n).get(0)));
+		Collections.sort(n, Comparator.comparing(a -> a.get(0)));
+        Collections.sort(e, Comparator.comparing(a -> a.get(1)));
+        Arrays.fill(dists, -1);
+
+        for (int i = 0; i < n.size(); i++) {
+            for (int j = 0; j < e.size(); j++) {
+                if (n.get(i).get(0) > e.get(j).get(0) && !blocked[n.get(i).get(2)] && !blocked[e.get(j).get(2)] && e.get(j).get(1) > n.get(i).get(1)) {
+                    if (e.get(j).get(1) - n.get(i).get(1) > n.get(i).get(0) - e.get(j).get(0)) {
+                        dists[n.get(i).get(2)] = e.get(j).get(1) - n.get(i).get(1);
+                        blocked[n.get(i).get(2)] = true;
+                    }
+                    if (n.get(i).get(0) - e.get(j).get(0) > e.get(j).get(1) - n.get(i).get(1)) {
+                        dists[e.get(j).get(2)] = n.get(i).get(0) - e.get(j).get(0);
+                        blocked[e.get(j).get(2)] = true;
+                    }
+                }
+            }
+        }
+        for (int i: dists) pw.println((i == -1) ? "Infinity": i);
+        // pw.println(e.toString());
         pw.close();
     }
 }
