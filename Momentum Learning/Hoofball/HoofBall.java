@@ -5,9 +5,28 @@ public class Main {
     static boolean[] held;
     static int[] cows;
     static PrintWriter pw;
-    static void subset(int[] indexes, int index, ArrayList<Integer> curr) {
+    static void subset(int[] indexes, ArrayList<Integer> curr) {
         int n = indexes.length;
-        if (index == n) return;
+ 
+        // Run a loop for printing all 2^n
+        // subsets one by one
+        for (int i = 0; i < (1<<n); i++)
+        { 
+            // Print current subset
+            for (int j = 0; j < n; j++)
+ 
+                // (1<<j) is a number with jth bit 1
+                // so when we 'and' them with the
+                // subset number we get which numbers
+                // are present in the subset and which
+                // are not
+                if ((i & (1 << j)) > 0)
+                    curr.add(indexes[j]);
+            sim(indexes, curr);
+            curr.clear();
+        }
+    } 
+    static void sim(int[] indexes, ArrayList<Integer> curr) {
         Arrays.fill(held, false);
         for (int i: curr) {
             boolean[] visited = new boolean[indexes.length];
@@ -36,13 +55,6 @@ public class Main {
             pw.close();
             System.exit(0);
         }
-        for (int i = index + 1; i < n; i++) {
-            curr.add(indexes[i]);
-            subset(indexes, i, curr);
-            ArrayList<Integer> temp = new ArrayList<>();
-            for (int j = 0; j < curr.size() - 1; j++) temp.add(curr.get(j));
-            curr = temp;
-        }
     }
     public static void main(String[] args) throws IOException {
         // BufferedReader br = new BufferedReader(new FileReader("input.in"));
@@ -61,7 +73,7 @@ public class Main {
         }
         Arrays.sort(cows);
         ArrayList<Integer> curr = new ArrayList<>();
-        subset(indexes, -1, curr);
+        subset(indexes, curr);
         pw.close();
     }
 }
