@@ -1,79 +1,76 @@
 import java.util.*;
 import java.io.*;
 
-public class Main {
-    static boolean[] held;
-    static int[] cows;
-    static PrintWriter pw;
-    static void subset(int[] indexes, ArrayList<Integer> curr) {
-        int n = indexes.length;
- 
-        // Run a loop for printing all 2^n
-        // subsets one by one
-        for (int i = 0; i < (1<<n); i++)
-        { 
-            // Print current subset
-            for (int j = 0; j < n; j++)
- 
-                // (1<<j) is a number with jth bit 1
-                // so when we 'and' them with the
-                // subset number we get which numbers
-                // are present in the subset and which
-                // are not
-                if ((i & (1 << j)) > 0)
-                    curr.add(indexes[j]);
-            sim(indexes, curr);
-            curr.clear();
-        }
-    } 
-    static void sim(int[] indexes, ArrayList<Integer> curr) {
-        Arrays.fill(held, false);
-        for (int i: curr) {
-            boolean[] visited = new boolean[indexes.length];
-            int currIndex = i;
-            while (true) {
-                if (currIndex == indexes.length - 1) currIndex--;
-                else if (currIndex == 0) currIndex++; 
-                else if (cows[currIndex + 1] - cows[currIndex] > cows[currIndex] - cows[currIndex - 1]) {
-                    currIndex--;
-                }
-                else if (cows[currIndex + 1] - cows[currIndex] < cows[currIndex] - cows[currIndex - 1]) {
-                    currIndex++; 
-                }
-                else {
-                    currIndex--;
-                }
-                if (visited[currIndex]) break;
-                visited[currIndex] = true;
-                held[currIndex] = true;
-            }
-        }
-        boolean[] check = new boolean[indexes.length];
-        Arrays.fill(check, true);
-        if (Arrays.equals(check, held)) {
-            pw.println(curr.size());
-            pw.close();
-            System.exit(0);
-        }
-    }
+public class HoofBall {
     public static void main(String[] args) throws IOException {
-        // BufferedReader br = new BufferedReader(new FileReader("input.in"));
-        // PrintWriter pw = new PrintWriter("output.out");
+        //BufferedReader br = new BufferedReader(new FileReader("hoofball.in"));
+        //PrintWriter pw = new PrintWriter("hoofball.out");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        pw = new PrintWriter(System.out);
+        PrintWriter pw = new PrintWriter(System.out);
         StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken());
-        cows = new int[N];
-        held = new boolean[N];
-        int[] indexes = new int[N];
+        int[] nums = new int[N];
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
-            cows[i] = Integer.parseInt(st.nextToken());
-            indexes[i] = i;
+            nums[i] = Integer.parseInt(st.nextToken());
         }
-        Arrays.sort(cows);
-        ArrayList<Integer> curr = new ArrayList<>();
-        subset(indexes, curr);
+        Arrays.sort(nums);
+        ArrayList<ArrayList<Integer>> right = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> left = new ArrayList<>();
+
+        right.add(new ArrayList<Integer>());
+        right.get(0).add(0); right.get(0).add(1);
+        int prevDiff = nums[1] - nums[0];
+        for (int i = 1; i < N - 1; i++) {
+            if (nums[i + 1] - nums[i] < prevDiff || nums[i + 1] - nums[i] == prevDiff) {
+                if (right.get(right.size() - 1).size() == 0) {
+                    right.get(right.size() - 1).add(i);
+                }
+                right.get(right.size() - 1).add(i + 1);
+            }
+            else {
+                if (right.get(right.size() - 1).size() > 0) right.add(new ArrayList<Integer>());
+            }
+            prevDiff = nums[i + 1] - nums[i];
+        }
+        left.add(new ArrayList<Integer>());
+        left.get(0).add(N - 1); left.get(0).add(N - 2);
+        prevDiff = nums[N - 1] - nums[N - 2];
+        for (int i = N - 2; i > 0; i--) {
+            if (nums[i] - nums[i - 1] < prevDiff || nums[i] - nums[i - 1] == prevDiff) {
+                if (left.get(left.size() - 1).size() == 0) {
+                    left.get(left.size() - 1).add(i);
+                }
+                left.get(left.size() - 1).add(i - 1);
+            }
+            else {
+                if (left.get(left.size() - 1).size() > 0) left.add(new ArrayList<Integer>());
+            }
+            prevDiff = nums[i] - nums[i - 1];
+        }
+        int a = (left.get(left.size() - 1).size() == 0) ? left.size() - 1 : left.size();
+        int b = (right.get(right.size() - 1).size() == 0) ? right.size() - 1 : right.size();
+        int count = a + b; 
+        for (ArrayList<Integer> l: left) {
+            for (ArrayList<Integer> r: right) {
+                if (l.size() == 0 || r.size() == 0) continue;
+                boolean found = true;
+                Collections.sort(l); Collections.sort(r);
+                if (l.size() == r.size() && !l.equals(r)) found = false;
+                else if (l.size() < r.size()) {
+                    for (int i: l) {
+                        if (!r.contains(i)) {found = false; break;}
+                    }
+                }
+                else if (r.size() < l.size()) {
+                    for (int i: r) {
+                        if (!l.contains(i)) {found = false; break;}
+                    }
+                }
+                if (found) {count--; }
+            }
+        }
+        pw.println(count);
         pw.close();
-    }
+    }  
 }
