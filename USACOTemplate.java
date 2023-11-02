@@ -3,6 +3,7 @@ import java.io.*;
 static BufferedReader br;
 static PrintWriter pw;
 static StringTokenizer st;
+
 public class USACOTemplate {
     public static void main(String[] args) throws IOException {
         // BufferedReader br = new BufferedReader(new FileReader("input.in"));
