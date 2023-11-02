@@ -17,14 +17,23 @@ public class Main {
             rule[i] = Integer.parseInt(st.nextToken());
             orig[i] = i + 1;
         }
-        int[] test = Arrays.clone(orig);
+        int[] test = orig.clone();
         for (int i = 0; i < K; i++) {
             int[] newArr = new int[N];
             for (int j = 0; j < N; j++) {
-                newArr[rule[j]] = test[j];
+                newArr[rule[j] - 1] = test[j];
             }
-            test = Arrays.clone(newArr);
+            test = newArr.clone();
         }
+        int empty = 0;
+        int stationary = 0;
+        int j = 0;
+        for (int i: test) {
+            if (i == 0) empty++;
+            if (i == orig[j]) stationary++;
+            j++;
+        }
+        pw.println(1000 * stationary + empty);
         pw.close();
     }
 }
