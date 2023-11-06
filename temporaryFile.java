@@ -2,38 +2,45 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
+    static void solve(PrintWriter pw, int[] nums) {
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int target = 0;
+            for (int j = 0; j <= i; j++) {
+                if (target > 0) count++;
+                target += nums[j];
+            }
+            int curr = 0;
+            for (int j = i + 1; j < nums.length; j++) {
+                if (curr > 0) count++;
+                curr += nums[j];
+                if (curr == target) {
+                    curr = 0;
+                }
+                else if (curr > target) {
+                    count = 0; break;
+                }
+            }
+            if (count > 0) { pw.println(count); return;}
+        }
+    }
     public static void main(String[] args) throws IOException {
         // BufferedReader br = new BufferedReader(new FileReader("input.in"));
         // PrintWriter pw = new PrintWriter("output.out");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter pw = new PrintWriter(System.out);
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int K = Integer.parseInt(st.nextToken());
-        st = new StringTokenizer(br.readLine());
-        int[] rule = new int[N]; // changes
-        int[] orig = new int[N]; // test
-        for (int i = 0; i < N; i++) {
-            rule[i] = Integer.parseInt(st.nextToken());
-            orig[i] = i + 1;
-        }
-        int[] test = orig.clone();
-        for (int i = 0; i < K; i++) {
-            int[] newArr = new int[N];
+        int T = Integer.parseInt(st.nextToken());
+        for (int i = 0; i < T; i++) {
+            st = new StringTokenizer(br.readLine());
+            int N = Integer.parseInt(st.nextToken());
+            st = new StringTokenizer(br.readLine());
+            int[] nums = new int[N];
             for (int j = 0; j < N; j++) {
-                newArr[rule[j] - 1] = test[j];
+                nums[j] = Integer.parseInt(st.nextToken());
             }
-            test = newArr.clone();
+            solve(pw, nums);
         }
-        int empty = 0;
-        int stationary = 0;
-        int j = 0;
-        for (int i: test) {
-            if (i == 0) empty++;
-            if (i == orig[j]) stationary++;
-            j++;
-        }
-        pw.println(1000 * stationary + empty);
         pw.close();
     }
 }
