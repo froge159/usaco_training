@@ -1,5 +1,5 @@
 /*
-create array containing subarray[conditional, answer, return value]
+create array containing subarray[input, output]
 
 iterating through all input/outputs:
        iterate through every possible conditional value:
