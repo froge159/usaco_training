@@ -12,11 +12,16 @@ iterating through all input/outputs:
 find new conditional value:
     for every index:
          if val == x return y
+1
+1 2
+1 0
+1 1
 */
+
 import java.util.*;
 import java.io.*;
 
-public class Reverse {
+public class Main {
     static void solve(PrintWriter pw, String[][] arr) {
         for (int i = 0; i < arr.length; i++) {
             String in = arr[i][0]; 
@@ -26,7 +31,8 @@ public class Reverse {
                 // if j == 
                 boolean satisfies = true;
                 for (int k = 0; k < i; k++) {
-                    if (arr[k][0].substring(j, j + 1).equals(in.substring(j, j + 1)) && !arr[k][1].equals(out)) {
+                    if ((arr[k][0].substring(j, j + 1).equals(in.substring(j, j + 1)) && !arr[k][1].equals(out)) 
+                         || (!arr[k][0].substring(j,j+1).equals(in.substring(j, j + 1)) && !arr[k][1].equals(out))) {
                         satisfies = false;
                         break;
                     }
