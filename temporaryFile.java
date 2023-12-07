@@ -32,35 +32,47 @@ public class Air {
                 inds.add(i);
                 int j = i + 1;
                 while (true) {
-                    if ((diff[j - 1] < 0 && diff[j] < 0) || (diff[j - 1] > 0 && diff[j] > 0)) {
+                    if (j < N && ((diff[j - 1] < 0 && diff[j] < 0) || (diff[j - 1] > 0 && diff[j] > 0))) {
                         inds.add(j);
                         j++;
                     }
                     else {
+                        //pw.println(inds.toString());
+                        if (j == N) j--;
                         int min = findMin(inds, diff);
                         for (int k = inds.get(0); k <= inds.get(inds.size() - 1); k++) {
-                            if (inds.get(0) < 0) {
+                            if (diff[k] > 0) {
                                 start[k] += min;
                             }
                             else start[k] -= min;
                             diff[k] = res[k] - start[k];
                         }
-                        count++;
+                        //pw.println(Arrays.toString(diff));
+                        count += min;
+                        int prev = 0;
+                        int cons = 0;
+                        for (int k = inds.get(0); k <= inds.get(inds.size() - 1); k++) {
+                            if (diff[k] != prev) {
+                                count += prev < 0 ? prev * -1 * cons: prev * cons;
+                                cons = 1;
+                            }
+                            else {
+                                cons++;
+                            }
+                            prev = diff[k];
 
-                        int prev = diff[inds.get(0)];
-
-                        for (int k = inds.get(1); k <= inds.get(inds.size() - 1); k++) {
-                            if (diff[inds.get(k)] != prev) {
-                                count++;
-                                prev = diff[inds.get(k)];
+                            if (k == inds.get(inds.size() - 1)) {
+                                count += diff[k - 1] < 0 ? diff[k - 1] * -1 * cons: diff[k - 1] * cons;
                             }
                         }
+                        pw.println(count);
                         inds.clear();
                         break;
                     }
                 }
-                i = j;
+                i = j - 1;
             }
+
         }
         pw.println(count);
         pw.close();
