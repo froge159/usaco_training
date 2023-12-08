@@ -1,13 +1,13 @@
 import java.util.*;
 import java.io.*;
 
-public class Air {
+public class Three {
     static int findMin(ArrayList<Integer> inds, int[] diff) {
         int minval = Integer.MAX_VALUE;
         for (int i: inds) {
-            if (Math.abs(diff[i]) < minval) minval = diff[i];
+            if (Math.abs(diff[i]) < minval && Math.abs(diff[i]) != 0) minval = diff[i];
         }
-        return minval;
+        return (minval == Integer.MAX_VALUE) ? 0 : minval;
     }
     public static void main(String[] args) throws IOException {
         // BufferedReader br = new BufferedReader(new FileReader("input.in"));
@@ -24,56 +24,51 @@ public class Air {
             start[i] = Integer.parseInt(st.nextToken());
             diff[i] = res[i] - start[i];
         }
-        int count = 0;
-        ArrayList<Integer> inds = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> groups = new ArrayList<>();
+        ArrayList<Integer> temp =  new ArrayList<>();
 
+        boolean startSearch = false;
         for (int i = 0; i < N; i++) {
-            if (diff[i] != 0) {
-                inds.add(i);
-                int j = i + 1;
-                while (true) {
-                    if (j < N && ((diff[j - 1] < 0 && diff[j] < 0) || (diff[j - 1] > 0 && diff[j] > 0))) {
-                        inds.add(j);
-                        j++;
-                    }
-                    else {
-                        //pw.println(inds.toString());
-                        if (j == N) j--;
-                        int min = findMin(inds, diff);
-                        for (int k = inds.get(0); k <= inds.get(inds.size() - 1); k++) {
-                            if (diff[k] > 0) {
-                                start[k] += min;
-                            }
-                            else start[k] -= min;
-                            diff[k] = res[k] - start[k];
-                        }
-                        //pw.println(Arrays.toString(diff));
-                        count += min;
-                        int prev = 0;
-                        int cons = 0;
-                        for (int k = inds.get(0); k <= inds.get(inds.size() - 1); k++) {
-                            if (diff[k] != prev) {
-                                count += prev < 0 ? prev * -1 * cons: prev * cons;
-                                cons = 1;
-                            }
-                            else {
-                                cons++;
-                            }
-                            prev = diff[k];
-
-                            if (k == inds.get(inds.size() - 1)) {
-                                count += diff[k - 1] < 0 ? diff[k - 1] * -1 * cons: diff[k - 1] * cons;
-                            }
-                        }
-                        pw.println(count);
-                        inds.clear();
-                        break;
-                    }
-                }
-                i = j - 1;
+            pw.println(temp.toString());
+            if (diff[i] != 0 && !startSearch) {
+                startSearch = true; temp.add(i);
+                continue;
             }
-
+            if (startSearch && ((diff[i] < 0 && temp.get(temp.size() - 1) < 0) || (diff[i] > 0 && temp.get(temp.size() - 1) > 0))) {
+                temp.add(i);
+            }
+            if (startSearch && ((diff[i] < 0 && temp.get(temp.size() - 1) >= 0) || (diff[i] > 0 && temp.get(temp.size() - 1) <= 0)) || i == N - 1) {
+                groups.add(temp); temp.clear();
+                startSearch = false;
+            }
         }
+        int prev = 0;
+        int count = 0;
+        for (int i = 0; i < groups.size(); i++) {
+            int min = findMin(groups.get(i), diff);
+
+            for (int j = 0; j < groups.get(i).size(); j++) {
+                int ind = groups.get(i).get(j);
+                if (diff[ind] != 0) {
+                    start[ind] += min; 
+                    diff[ind] = res[ind] - start[ind];
+                }
+            }
+            count += Math.abs(min);
+            prev = Integer.MIN_VALUE; 
+            for (int j = 0; j < groups.get(i).size(); j++) {
+                int ind = groups.get(i).get(j);
+                if (diff[ind] != prev || diff[ind] == 0) {
+                    if (j != 0) count += Math.abs(diff[ind - 1]);
+                }
+                prev = diff[ind];
+                if (j == groups.get(i).size() - 1) {
+                    count += Math.abs(diff[ind]);
+                }
+            }
+            pw.println(count + " " + groups.get(i).toString());
+        }
+        pw.println(Arrays.toString(diff));
         pw.println(count);
         pw.close();
     }
