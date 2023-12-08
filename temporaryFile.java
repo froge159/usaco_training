@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class Three {
+public class myClass {
     static int findMin(ArrayList<Integer> inds, int[] diff) {
         int minval = Integer.MAX_VALUE;
         for (int i: inds) {
@@ -20,27 +20,17 @@ public class Three {
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) res[i] = Integer.parseInt(st.nextToken());
         st = new StringTokenizer(br.readLine());
+        int startIndex = 0;
         for (int i = 0; i < N; i++) { 
             start[i] = Integer.parseInt(st.nextToken());
             diff[i] = res[i] - start[i];
+            if (diff[i] != 0 && startIndex == 0) startIndex = diff[i];
         }
         ArrayList<ArrayList<Integer>> groups = new ArrayList<>();
         ArrayList<Integer> temp =  new ArrayList<>();
 
-        boolean startSearch = false;
-        for (int i = 0; i < N; i++) {
-            pw.println(temp.toString());
-            if (diff[i] != 0 && !startSearch) {
-                startSearch = true; temp.add(i);
-                continue;
-            }
-            if (startSearch && ((diff[i] < 0 && temp.get(temp.size() - 1) < 0) || (diff[i] > 0 && temp.get(temp.size() - 1) > 0))) {
-                temp.add(i);
-            }
-            if (startSearch && ((diff[i] < 0 && temp.get(temp.size() - 1) >= 0) || (diff[i] > 0 && temp.get(temp.size() - 1) <= 0)) || i == N - 1) {
-                groups.add(temp); temp.clear();
-                startSearch = false;
-            }
+        for (int i = startIndex; i < N; i++) {
+            
         }
         int prev = 0;
         int count = 0;
@@ -68,7 +58,6 @@ public class Three {
             }
             pw.println(count + " " + groups.get(i).toString());
         }
-        pw.println(Arrays.toString(diff));
         pw.println(count);
         pw.close();
     }
