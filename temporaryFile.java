@@ -28,10 +28,28 @@ public class myClass {
         }
         ArrayList<ArrayList<Integer>> groups = new ArrayList<>();
         ArrayList<Integer> temp =  new ArrayList<>();
-
-        for (int i = startIndex; i < N; i++) {
-            
-        }
+        boolean start = false;
+        
+        for (int i = startIndex; i < diff.length; i++) {
+                    if (temp.size() == 0 && diff[i] != 0) {
+                        temp.add(i); start = true;
+                        continue;
+                    }
+                    if (start && ((diff[i] > 0 && diff[i - 1] > 0) || (diff[i] < 0 && diff[i - 1] < 0))) {
+                        temp.add(i);
+                    }
+                    if (start && ((diff[i] >= 0 && diff[i - 1] < 0) || (diff[i] <= 0 && diff[i - 1] > 0))) {
+                        System.out.println(temp.toString());
+                        groups.add(temp); start = false;
+                        temp.clear();
+                        if (diff[i] != 0) {
+                            start = true;
+                            temp.add(i);
+                        }
+                        
+                    }
+                }
+                if (temp.size() > 0) groups.add(temp);
         int prev = 0;
         int count = 0;
         for (int i = 0; i < groups.size(); i++) {
