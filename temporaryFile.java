@@ -19,16 +19,29 @@ public class Year {
         HashMap<String, String> locs = new HashMap<>();
 
         dists.put("Bessie", 0);
+        locs.put("Bessie", "Ox");
         for (int i = 0; i < N; i++) {
             String line = br.readLine();    
             String[] lineArr = line.split(" ");
             String a = lineArr[0]; String b = lineArr[7];
             String dir = lineArr[3]; String year = lineArr[4];
             if (dir.equals("previous")) {
-                dists.put(a, dists.get(b) - (indexOf(years, locs.get(b)) + 1 + (11 - indexOf(years, year))));
+                int count = 0;
+                for (int j = (locs.get(b).equals("Ox"))? 11 : indexOf(years, locs.get(b)) - 1; j >= 0; j--) {
+                    count++;
+                    if (years[j].equals(year)) break;
+                    if (j == 0) j = 12;
+                }
+                dists.put(a, dists.get(b) - count);
             }
             else {
-                dists.put(a, dists.get(b) + (11 - indexOf(years, locs.get(b)) + indexOf(years, year) + 1));
+                int count = 0;
+                for (int j = (locs.get(b).equals("Rat") ? 0 : indexOf(years, locs.get(b))) + 1; j < 12; j++) {
+                    count++;
+                    if (years[j].equals(year)) break;
+                    if (j == 11) j = -1;
+                }
+                dists.put(a, dists.get(b) + count);
             }
             locs.put(a, year);
         }
