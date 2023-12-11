@@ -1,82 +1,38 @@
 import java.util.*;
 import java.io.*;
-
-public class myClass {
-    static int findMin(ArrayList<Integer> inds, int[] diff) {
-        int minval = Integer.MAX_VALUE;
-        for (int i: inds) {
-            if (Math.abs(diff[i]) < minval && Math.abs(diff[i]) != 0) minval = diff[i];
+public class Year {
+    static int indexOf(String[] arr, String year) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i].equals(year)) return i;
         }
-        return (minval == Integer.MAX_VALUE) ? 0 : minval;
+        return -1;
     }
     public static void main(String[] args) throws IOException {
-        // BufferedReader br = new BufferedReader(new FileReader("input.in"));
-        // PrintWriter pw = new PrintWriter("output.out");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter pw = new PrintWriter(System.out);
         StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken());
-        int[] res = new int[N]; int[] start = new int[N]; int[] diff = new int[N];
-        st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < N; i++) res[i] = Integer.parseInt(st.nextToken());
-        st = new StringTokenizer(br.readLine());
-        int startIndex = 0;
-        for (int i = 0; i < N; i++) { 
-            start[i] = Integer.parseInt(st.nextToken());
-            diff[i] = res[i] - start[i];
-            if (diff[i] != 0 && startIndex == 0) startIndex = diff[i];
-        }
-        ArrayList<ArrayList<Integer>> groups = new ArrayList<>();
-        ArrayList<Integer> temp =  new ArrayList<>();
-        boolean start = false;
-        
-        for (int i = startIndex; i < diff.length; i++) {
-                    if (temp.size() == 0 && diff[i] != 0) {
-                        temp.add(i); start = true;
-                        continue;
-                    }
-                    if (start && ((diff[i] > 0 && diff[i - 1] > 0) || (diff[i] < 0 && diff[i - 1] < 0))) {
-                        temp.add(i);
-                    }
-                    if (start && ((diff[i] >= 0 && diff[i - 1] < 0) || (diff[i] <= 0 && diff[i - 1] > 0))) {
-                        System.out.println(temp.toString());
-                        groups.add(temp); start = false;
-                        temp.clear();
-                        if (diff[i] != 0) {
-                            start = true;
-                            temp.add(i);
-                        }
-                        
-                    }
-                }
-                if (temp.size() > 0) groups.add(temp);
-        int prev = 0;
-        int count = 0;
-        for (int i = 0; i < groups.size(); i++) {
-            int min = findMin(groups.get(i), diff);
+        int dist = 0;
+        String[] years = {"Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig", "Rat"
+        };
+        HashMap<String, Integer> dists = new HashMap<>();
+        HashMap<String, String> locs = new HashMap<>();
 
-            for (int j = 0; j < groups.get(i).size(); j++) {
-                int ind = groups.get(i).get(j);
-                if (diff[ind] != 0) {
-                    start[ind] += min; 
-                    diff[ind] = res[ind] - start[ind];
-                }
+        dists.put("Bessie", 0);
+        for (int i = 0; i < N; i++) {
+            String line = br.readLine();    
+            String[] lineArr = line.split(" ");
+            String a = lineArr[0]; String b = lineArr[7];
+            String dir = lineArr[3]; String year = lineArr[4];
+            if (dir.equals("previous")) {
+                dists.put(a, dists.get(b) - (indexOf(years, locs.get(b)) + 1 + (11 - indexOf(years, year))));
             }
-            count += Math.abs(min);
-            prev = Integer.MIN_VALUE; 
-            for (int j = 0; j < groups.get(i).size(); j++) {
-                int ind = groups.get(i).get(j);
-                if (diff[ind] != prev || diff[ind] == 0) {
-                    if (j != 0) count += Math.abs(diff[ind - 1]);
-                }
-                prev = diff[ind];
-                if (j == groups.get(i).size() - 1) {
-                    count += Math.abs(diff[ind]);
-                }
+            else {
+                dists.put(a, dists.get(b) + (11 - indexOf(years, locs.get(b)) + indexOf(years, year) + 1));
             }
-            pw.println(count + " " + groups.get(i).toString());
+            locs.put(a, year);
         }
-        pw.println(count);
+        pw.println(Math.abs(dists.get("Elsie")));
         pw.close();
     }
 }
