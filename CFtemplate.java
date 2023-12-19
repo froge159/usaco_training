@@ -9,7 +9,7 @@ public class CFtemplate {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter pw = new PrintWriter(System.out);
         int T = Integer.parseInt(br.readLine());
-        for (int i = 0; i < T; i++) {
+        while (T-- > 0) {
             // stringtokenizer
             solve(pw);
         }
