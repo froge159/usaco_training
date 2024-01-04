@@ -1,51 +1,55 @@
 import java.util.*;
 import java.io.*;
-public class Year {
-    static int indexOf(String[] arr, String year) {
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i].equals(year)) return i;
-        }
-        return -1;
-    }
+
+public class Main {
+	static void solve(long[][] arr, PrintWriter pw) {
+		// 0 - initial   1 - increase        2 - ordering
+		if (arr.length == 1) pw.println(0);
+		else {
+			Arrays.sort(arr, (a, b) -> Long.compare(a[2], b[2]));
+			double min = Double.MIN_VALUE; double max = Double.MAX_VALUE;
+			for (int i = 0; i < arr.length - 1; i += 2) {
+				long m1 = arr[i][0]; long m2 = arr[i + 1][0];
+				long inc1 = arr[i][1]; long inc2 = arr[i + 1][1];
+				long left = inc1 - inc2;
+				long right = m2 - m1;
+
+				if (left < 0) max = Math.min(max, (double) right / left);
+				else min = Math.max(min, (double) right / left);
+			}
+			//pw.println(min);
+			if (min % 1 == 0) min++;
+			else min = Math.ceil(min);
+			if (max % 1 == 0) max--;
+			else max = Math.floor(max);
+
+
+			pw.println(Math.ceil(Double.MAX_VALUE));
+			if (max < min) pw.println(-1);
+			else {
+				if (min == Double.MIN_VALUE) pw.println(0);
+				else pw.println((long) min);
+			}
+		}
+	}
     public static void main(String[] args) throws IOException {
+        // BufferedReader br = new BufferedReader(new FileReader("input.in"));
+        // PrintWriter pw = new PrintWriter("output.out");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter pw = new PrintWriter(System.out);
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int dist = 0;
-        String[] years = {"Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig", "Rat"
-        };
-        HashMap<String, Integer> dists = new HashMap<>();
-        HashMap<String, String> locs = new HashMap<>();
-
-        dists.put("Bessie", 0);
-        locs.put("Bessie", "Ox");
-        for (int i = 0; i < N; i++) {
-            String line = br.readLine();    
-            String[] lineArr = line.split(" ");
-            String a = lineArr[0]; String b = lineArr[7];
-            String dir = lineArr[3]; String year = lineArr[4];
-            if (dir.equals("previous")) {
-                int count = 0;
-                for (int j = (locs.get(b).equals("Ox"))? 11 : indexOf(years, locs.get(b)) - 1; j >= 0; j--) {
-                    count++;
-                    if (years[j].equals(year)) break;
-                    if (j == 0) j = 12;
-                }
-                dists.put(a, dists.get(b) - count);
-            }
-            else {
-                int count = 0;
-                for (int j = (locs.get(b).equals("Rat") ? 0 : indexOf(years, locs.get(b))) + 1; j < 12; j++) {
-                    count++;
-                    if (years[j].equals(year)) break;
-                    if (j == 11) j = -1;
-                }
-                dists.put(a, dists.get(b) + count);
-            }
-            locs.put(a, year);
-        }
-        pw.println(Math.abs(dists.get("Elsie")));
+		int T = Integer.parseInt(br.readLine());
+		while (T-- > 0) {
+			int N = Integer.parseInt(br.readLine());
+			long[][] arr = new long[N][3];
+			for (int i = 0; i < 3; i++) {
+				StringTokenizer st = new StringTokenizer(br.readLine());
+				for (int j = 0; j < N; j++) {
+					arr[j][i] = Integer.parseInt(st.nextToken());
+				}
+			}
+			//pw.println(Arrays.deepToString(arr));
+			solve(arr, pw);
+		}
         pw.close();
     }
 }
