@@ -9,32 +9,7 @@ public class Main {
 
     */
     static void solve() { 
-        int n = in.nextInt(); int m = in.nextInt(); int k = in.nextInt();
-		int[] a = new int[n]; int[] b = new int[m];
-		for (int i = 0; i < n; i++) a[i] = in.nextInt();
-		for (int i = 0; i < m; i++) b[i] = in.nextInt();
-        Arrays.sort(a); Arrays.sort(b);
-
-        int aCount = 0; int bCount = 0;
-        int shared = 0;
-        for (int i = 1; i <= k; i++) {
-            int aInd = Arrays.binarySearch(a, i); int bInd = Arrays.binarySearch(b, i);
-            if (aInd >= 0 && bInd < 0) aCount++;
-            else if (bInd >= 0 && aInd < 0) bCount++;
-            else if (aInd >= 0 && bInd >= 0) {
-                shared++;
-            }
-            else {
-                pw.println("NO"); return;
-            }
-        }
-        while (shared > 0) {
-            if (aCount < bCount) aCount++;
-            else bCount++;
-            shared--;
-        }
-
-        pw.println(aCount == bCount ? "YES" : "NO");
+        
     }
     public static void main(String[] args) throws IOException {        
         int T = in.nextInt();
@@ -54,7 +29,6 @@ class FastReader {
     public FastReader() {
         br = new BufferedReader(new InputStreamReader(System.in));
     }
-
     String next() {
         while (st == null || !st.hasMoreElements()) {
             try {
@@ -66,19 +40,15 @@ class FastReader {
         }
         return st.nextToken();
     }
-
     int nextInt() {
         return Integer.parseInt(next());
     }
-
     long nextLong() {
         return Long.parseLong(next());
     }
-
     double nextDouble() {
         return Double.parseDouble(next());
     }
-
     String nextLine() {
         String str = "";
         try {
@@ -88,5 +58,13 @@ class FastReader {
             e.printStackTrace();
         }
         return str;
+    }    
+    
+    int[] prefSums(int[] arr) {
+        int[] newArr = new int[arr.length + 1];
+        for (int i = 0; i < arr.length; i++) {
+            newArr[i + 1] = arr[i] + newArr[i];
+        }
+        return newArr;
     }
 }
