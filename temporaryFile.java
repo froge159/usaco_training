@@ -2,54 +2,91 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-	static void solve(long[][] arr, PrintWriter pw) {
-		// 0 - initial   1 - increase        2 - ordering
-		if (arr.length == 1) pw.println(0);
-		else {
-			Arrays.sort(arr, (a, b) -> Long.compare(a[2], b[2]));
-			double min = Double.MIN_VALUE; double max = Double.MAX_VALUE;
-			for (int i = 0; i < arr.length - 1; i += 2) {
-				long m1 = arr[i][0]; long m2 = arr[i + 1][0];
-				long inc1 = arr[i][1]; long inc2 = arr[i + 1][1];
-				long left = inc1 - inc2;
-				long right = m2 - m1;
+    static FastReader in = new FastReader();
+    static PrintWriter pw = new PrintWriter(System.out);
+    /*
+    remove duplicates from each arr
 
-				if (left < 0) max = Math.min(max, (double) right / left);
-				else min = Math.max(min, (double) right / left);
-			}
-			//pw.println(min);
-			if (min % 1 == 0) min++;
-			else min = Math.ceil(min);
-			if (max % 1 == 0) max--;
-			else max = Math.floor(max);
+    */
+    static void solve() { 
+        int n = in.nextInt(); int m = in.nextInt(); int k = in.nextInt();
+		int[] a = new int[n]; int[] b = new int[m];
+		for (int i = 0; i < n; i++) a[i] = in.nextInt();
+		for (int i = 0; i < m; i++) b[i] = in.nextInt();
+        Arrays.sort(a); Arrays.sort(b);
 
+        int aCount = 0; int bCount = 0;
+        int shared = 0;
+        for (int i = 1; i <= k; i++) {
+            int aInd = Arrays.binarySearch(a, i); int bInd = Arrays.binarySearch(b, i);
+            if (aInd >= 0 && bInd < 0) aCount++;
+            else if (bInd >= 0 && aInd < 0) bCount++;
+            else if (aInd >= 0 && bInd >= 0) {
+                shared++;
+            }
+            else {
+                pw.println("NO"); return;
+            }
+        }
+        while (shared > 0) {
+            if (aCount < bCount) aCount++;
+            else bCount++;
+            shared--;
+        }
 
-			pw.println(Math.ceil(Double.MAX_VALUE));
-			if (max < min) pw.println(-1);
-			else {
-				if (min == Double.MIN_VALUE) pw.println(0);
-				else pw.println((long) min);
-			}
-		}
-	}
-    public static void main(String[] args) throws IOException {
-        // BufferedReader br = new BufferedReader(new FileReader("input.in"));
-        // PrintWriter pw = new PrintWriter("output.out");
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        PrintWriter pw = new PrintWriter(System.out);
-		int T = Integer.parseInt(br.readLine());
-		while (T-- > 0) {
-			int N = Integer.parseInt(br.readLine());
-			long[][] arr = new long[N][3];
-			for (int i = 0; i < 3; i++) {
-				StringTokenizer st = new StringTokenizer(br.readLine());
-				for (int j = 0; j < N; j++) {
-					arr[j][i] = Integer.parseInt(st.nextToken());
-				}
-			}
-			//pw.println(Arrays.deepToString(arr));
-			solve(arr, pw);
-		}
+        pw.println(aCount == bCount ? "YES" : "NO");
+    }
+    public static void main(String[] args) throws IOException {        
+        int T = in.nextInt();
+        while (T-- > 0) {
+            solve();
+        }
         pw.close();
+    }
+    
+}
+
+class FastReader {
+
+    BufferedReader br;
+    StringTokenizer st;
+
+    public FastReader() {
+        br = new BufferedReader(new InputStreamReader(System.in));
+    }
+
+    String next() {
+        while (st == null || !st.hasMoreElements()) {
+            try {
+                st = new StringTokenizer(br.readLine());
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return st.nextToken();
+    }
+
+    int nextInt() {
+        return Integer.parseInt(next());
+    }
+
+    long nextLong() {
+        return Long.parseLong(next());
+    }
+
+    double nextDouble() {
+        return Double.parseDouble(next());
+    }
+
+    String nextLine() {
+        String str = "";
+        try {
+            str = br.readLine();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return str;
     }
 }
